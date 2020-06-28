@@ -1,0 +1,49 @@
+clc;
+clear;
+close all;
+
+intervalo = [0 , 1] ;
+f = @(t,x) -2*(x(1) - 3) ;
+x0 = 2 ;
+sol = @(t) (3-exp(-2*t)) ;
+N = 200 ;
+
+h = (intervalo(2) - intervalo(1)) / N ;
+t = intervalo(1):h:intervalo(2) ;
+
+r = 2;
+x(1) = x0 ;
+fi(1) = f(t(1), x0) ;
+
+for i=1:r
+  x(i+1) = x(i) + h*f(t(i), x(i)) ;
+  fi(i+1) = f(t(i+1), x(i+1)) ;
+end
+
+idx=r+1;
+
+for i=1:N+1-r
+   % Prediccion
+   x(i+2) = x(i+1) + h*f(t(i+1), x(i+1)) ;
+   
+   % Evaluacion
+   fi(idx) = f(t(i+2), x(i+2)) ;
+   
+   % Corrector
+   x(i+2) = x(i+1) + h/12*(5*fi(idx) + 8*fi(mod(idx+1, r+1) + 1) ...
+       + 8*fi(mod(idx, r+1) + 1));
+   
+   % Evaluacion
+   fi(idx) = f(t(i+2), x(i+2)) ;
+  
+   idx = mod(idx, r+1) + 1;
+end
+
+% disp(max(abs(sol(t) - x)))  ;
+dif = max(abs(x-sol(t))) ;
+disp(dif)
+x = x.' ;
+plot(t,x,'r') ; 
+hold on
+fplot(sol, intervalo, 'g') ;
+

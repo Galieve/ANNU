@@ -1,3 +1,3 @@
 datos;
-[t, x] = ode45(f, [0:0.01:2*pi], [0, 4]);
+[t, x] = ode45(f, intervalo, x0, N);
 graficas;

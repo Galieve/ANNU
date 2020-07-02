@@ -36,3 +36,4 @@ end
 t=t(:);  % Convertimos t en vector columna del tipo (N+1,1)
 x=x.';   % Convertimos la matriz x en una del tipo (N+1,n)
     
+end

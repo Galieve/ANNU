@@ -1,0 +1,7 @@
+intervalo = [0 , pi];
+f = @(t,x) (x(1) + cos(t));
+x0 = 1;
+N = 100;
+h = (intervalo(2) - intervalo(1)) / N;
+
+t = intervalo(1):h:intervalo(2
